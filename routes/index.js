@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var bcrypt = require('bcryptjs');
 var db = require('monk')(process.env.MONGODB_URI);
-var players = db.get('players');
+var players = db.collection('players');
 
 router.get('/', function(req, res, next) {
   var player = req.cookies.user || "";
