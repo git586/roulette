@@ -4,7 +4,6 @@ var bcrypt = require('bcryptjs');
 var db = require('monk')(process.env.MONGODB_URI);
 var players = db.get('players');
 
-console.log(players);
 router.get('/', function(req, res, next) {
   var player = req.cookies.user || "";
   res.render('index', {player: player});
@@ -16,7 +15,7 @@ router.post('/login', function(req,res,next){
   var playerPw = req.body.password;
   players.findOne({name: playerName}, function(err,data){
     if (data == null){
-      res.render('index', {error: "Invalid Credentials", errMsg: 'Please Try Again'})
+      res.render('index', {error: "Parametres manquants pour la connexion", errMsg: 'Please Try Again'})
     }
     else {
       bcrypt.compare(playerPw.toUpperCase(), data.password , function(err, answer) {
@@ -25,7 +24,7 @@ router.post('/login', function(req,res,next){
           res.redirect('/roulette/table');
         }
         else {
-          res.render('index', {error: "Invalid Credentials", errMsg: 'Please Try Again'})
+          res.render('index', {error: "Login ou mot de passe incorrect", errMsg: 'Please Try Again'})
         }
       });
     }
