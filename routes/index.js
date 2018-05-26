@@ -4,7 +4,7 @@ var bcrypt = require('bcryptjs');
 var db = require('monk')(process.env.MONGODB_URI);
 var players = db.get('players');
 
-
+console.log(players);
 router.get('/', function(req, res, next) {
   var player = req.cookies.user || "";
   res.render('index', {player: player});
